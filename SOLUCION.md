@@ -28,12 +28,36 @@ Edito lo básico en "settings.py"
 
 ```python
 
-TIME_ZONE = ‘Europe-Madrid’
-LANGUAGE_CODE = ‘es_es’
+TIME_ZONE = ‘Europe/Madrid’
+LANGUAGE_CODE = ‘es-es’
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1','localhost', '.pythonanywhere.com']
+
+DATABASES = {
+'default': {
+'ENGINE': 'django.db.backends.sqlite3',
+'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 ```
+
+Creo la base de datos y la inicio
+
+```bash
+python manage.py migrate
+```
+
+Compruebo que mi servidor funciona
+
+```bash
+python manage.py runserver
+```
+
+En web puedo acceder con cualquiera de las siguientes URLs
+
+    ---> 127.0.0.1
+    ---> localhost

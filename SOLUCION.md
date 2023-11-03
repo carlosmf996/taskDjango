@@ -125,3 +125,38 @@ python manage.py createsuperuser
 
 Para acceder a la página del login:
     --->http://127.0.0.1:8000/admin/
+
+Modificamos "views.py". Debería de quedar algo así:
+
+```python
+from django.shortcuts import render
+from .models import Task
+
+def task_list(request):
+
+    task = Task.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    return render(request, 'blog/post_list.html', {'task': task})
+```
+
+Modificamos el "urls.py", este archivo es el del SITIO, ya venía creado. Sin mostrar comentarios, debería quedar así:
+
+```python
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('taskapp.urls')),
+]
+```
+
+En la aplicación, creamos un "urls.py" también, y debería quedar tal que así:
+
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.task_list, name='task_list'),
+]
+```

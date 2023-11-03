@@ -23,3 +23,17 @@ Creo el proyecto en la carpeta que quiero
 ```bash
 django-admin startproject task .
 ```
+
+Edito lo básico en "settings.py"
+
+```python
+
+TIME_ZONE = ‘Europe-Madrid’
+LANGUAGE_CODE = ‘es_es’
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
+
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+
+```

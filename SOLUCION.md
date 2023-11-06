@@ -111,9 +111,9 @@ Modificamos el "admin.py" para crear un nuevo superusuario. Deberíamos tener al
 
 ```python
 from django.contrib import admin
-from .models import Post
+from .models import Task
 
-admin.site.register(Post)
+admin.site.register(Task)
 ```
 
 Creamos el administrador. Necesitamos tener el servidor arrancado y ejecutar la siguiente orden en otra terminal
@@ -135,7 +135,7 @@ from .models import Task
 def task_list(request):
 
     task = Task.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'blog/post_list.html', {'task': task})
+    return render(request, 'tasks/task_list.html', {'task': task})
 ```
 
 Modificamos el "urls.py", este archivo es el del SITIO, ya venía creado. Sin mostrar comentarios, debería quedar así:

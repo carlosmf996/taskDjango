@@ -1,0 +1,16 @@
+<html>
+<head>
+    <title>ToDoList</title>    
+</head>
+<body>
+        <h1>Lista de Tareas</h1>
+        <ul>
+        {% for task in tasks %}
+            <li>{{ task.title }} - {{ task.descripcion }} ({{ task.completed|yesno:"Si,No" }})</li>
+            {% empty %}
+            <li>No hay tareas por hacer.</li>
+
+        {% endfor %}
+        </ul>
+</body>
+</html>

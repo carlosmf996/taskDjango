@@ -160,3 +160,24 @@ urlpatterns = [
     path('', views.task_list, name='task_list'),
 ]
 ```
+
+Creo la carpeta "Templates", y dentro de la misma creo la carpeta "tasks". Finalmente creo dentro "task_list.html" y escribo el código
+
+```html
+<html>
+<head>
+    <title>ToDoList</title>    
+</head>
+<body>
+        <h1>Lista de Tareas</h1>
+        <ul>
+        {% for task in tasks %}
+            <li>{{ task.title }} - {{ task.descripcion }} ({{ task.completed|yesno:"Si,No" }})</li>
+            {% empty %}
+            <li>No hay tareas por hacer.</li>
+
+        {% endfor %}
+        </ul>
+</body>
+</html>
+```

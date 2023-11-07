@@ -5,8 +5,8 @@
 <body>
         <h1>Lista de Tareas</h1>
         <ul>
-        {% for task in tasks %}
-            <li>{{ task.title }} - {{ task.descripcion }} ({{ task.completed|yesno:"Si,No" }})</li>
+        {% for task in task %}
+            <li>{{ task.title }} - {{ task.descripcion }} ({{ task.completado|yesno:"Si,No" }})</li>
             {% empty %}
             <li>No hay tareas por hacer.</li>
 

@@ -88,10 +88,11 @@ from django.db import models
 from django.utils import timezone
 
 class Task(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     text = models.TextField()
     completado = models.BooleanField(default=False)
+    published_date= models.DateTimeField(default=timezone.now)
+
 
     def __str__(self):
         return self.title
@@ -129,13 +130,14 @@ Para acceder a la página del login:
 Modificamos "views.py". Debería de quedar algo así:
 
 ```python
+from django.utils import timezone
 from django.shortcuts import render
 from .models import Task
 
 def task_list(request):
 
     task = Task.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'blog/post_list.html', {'task': task})
+    return render(request, 'tasks/task_list.html', {'task': task})
 ```
 
 Modificamos el "urls.py", este archivo es el del SITIO, ya venía creado. Sin mostrar comentarios, debería quedar así:
@@ -171,8 +173,8 @@ Creo la carpeta "Templates", y dentro de la misma creo la carpeta "tasks". Final
 <body>
         <h1>Lista de Tareas</h1>
         <ul>
-        {% for task in tasks %}
-            <li>{{ task.title }} - {{ task.descripcion }} ({{ task.completed|yesno:"Si,No" }})</li>
+        {% for task in task %}
+            <li>{{ task.title }} - {{ task.descripcion }} ({{ task.completado|yesno:"Si,No" }})</li>
             {% empty %}
             <li>No hay tareas por hacer.</li>
 

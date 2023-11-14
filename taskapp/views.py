@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from .models import Task
 from .forms import TaskForm
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -22,7 +23,7 @@ from .forms import TaskForm
 
 class TaskList(View):
 
-        
+
     def get(self, request):
         form=TaskForm()
         task = Task.objects.all()
@@ -31,8 +32,12 @@ class TaskList(View):
     def post(self, request):
         form=TaskForm(request.POST)
         if form.is_valid():
-            form.save()
+            title = form.cleaned_data["title"]
+            text = form.cleaned_data["text"]
+            completado = form.cleaned_data["completado"]
 
+            Task.objects.create(title = title, text = text, completado = completado)
+            #form.save()
             return redirect('task_list')
         task = Task.objects.all()
         return render(request, 'tasks/task_list.html', {'task': task, 'form': form})

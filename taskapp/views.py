@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from .models import Task
 from .forms import TaskForm
@@ -26,8 +26,8 @@ class TaskList(View):
 
     def get(self, request):
         form=TaskForm()
-        task = Task.objects.all()
-        return render(request, 'tasks/task_list.html', {'task': task, 'form': form})
+        tasks = Task.objects.all()
+        return render(request, 'tasks/task_list.html', {'tasks': tasks, 'form': form})
     
     def post(self, request):
         form=TaskForm(request.POST)
@@ -39,5 +39,12 @@ class TaskList(View):
             Task.objects.create(title = title, text = text, completado = completado)
             #form.save()
             return redirect('task_list')
-        task = Task.objects.all()
-        return render(request, 'tasks/task_list.html', {'task': task, 'form': form})
+        tasks = Task.objects.all()
+        return render(request, 'tasks/task_list.html', {'tasks': tasks, 'form': form})
+
+
+class TaskDetails(View):
+
+    def get(self, request, pk):
+        tasks = get_object_or_404(Task, pk=pk)  
+        return render(request, 'tasks/task_details.html', {'tasks': tasks})

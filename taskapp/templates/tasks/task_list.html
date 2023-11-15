@@ -3,26 +3,17 @@
     <title>ToDoList</title>    
 </head>
 <body>
-
-    <!--
-
-    <h1>Completar formulario</h1>
-    <form action="{% url 'task_list'%}" method="POST">
-        {% csrf_token%}
-        {{ form.as_p }}
-        <button type="submit">Dale caña</button>
-    </form>
-
-    -->
-
     <h1>Lista de Tareas</h1>
     <ul>
         {% for task in tasks %}
         <h2><a href="{% url 'task_details' pk=task.pk %}">{{ task.title }}</a></h2>
         {% empty %}
         <li>No hay tareas por hacer.</li>
-
         {% endfor %}
+        
+        <form action = "{% url 'new' %}">
+            <button type="submit">Añadir nuevo comentario</button>
+        </form>
     </ul>
 </body>
 </html>

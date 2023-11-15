@@ -25,9 +25,23 @@ class TaskList(View):
 
 
     def get(self, request):
-        form=TaskForm()
         tasks = Task.objects.all()
-        return render(request, 'tasks/task_list.html', {'tasks': tasks, 'form': form})
+        return render(request, 'tasks/task_list.html', {'tasks': tasks})
+            
+
+
+class TaskDetails(View):
+
+    def get(self, request, pk):
+        tasks = get_object_or_404(Task, pk=pk)  
+        return render(request, 'tasks/task_details.html', {'tasks': tasks})
+    
+
+class New(View):
+
+    def get(self, request):
+        form=TaskForm()
+        return render(request, 'tasks/new.html', {'form': form})
     
     def post(self, request):
         form=TaskForm(request.POST)
@@ -39,12 +53,4 @@ class TaskList(View):
             Task.objects.create(title = title, text = text, completado = completado)
             #form.save()
             return redirect('task_list')
-        tasks = Task.objects.all()
-        return render(request, 'tasks/task_list.html', {'tasks': tasks, 'form': form})
-
-
-class TaskDetails(View):
-
-    def get(self, request, pk):
-        tasks = get_object_or_404(Task, pk=pk)  
-        return render(request, 'tasks/task_details.html', {'tasks': tasks})
+        return render(request, 'tasks/new.html', {'form': form})
